@@ -7,10 +7,10 @@
     <style>
         :root {
             --bg-dark: #0b0f19;
-            --bg-glass: rgba(255, 255, 255, 0.04); /* Transparent card background */
+            --bg-glass: rgba(255, 255, 255, 0.04);
             --bg-glass-hover: rgba(255, 255, 255, 0.08);
-            --bg-concepts: rgba(0, 0, 0, 0.35); /* Inner transparent box */
-            --border-glass: rgba(255, 255, 255, 0.12); /* Glass edge border */
+            --bg-concepts: rgba(0, 0, 0, 0.35);
+            --border-glass: rgba(255, 255, 255, 0.12);
             --text-main: #f1f5f9;
             --text-muted: #cbd5e1;
             --accent: #63b3ed;
@@ -19,7 +19,6 @@
 
         body {
             background-color: var(--bg-dark);
-            /* Ambient radial gradients behind the glass cards */
             background-image: 
                 radial-gradient(circle at 15% 20%, rgba(99, 179, 237, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 85% 80%, rgba(99, 179, 237, 0.10) 0%, transparent 40%);
@@ -32,14 +31,11 @@
             line-height: 1.6;
             overflow-x: hidden;
             letter-spacing: 0.5px;
-
-            /* Keep footer at bottom */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* --- Moving Java Background Logo --- */
         .bg-java-logo {
             position: fixed;
             top: 50%;
@@ -48,7 +44,7 @@
             height: 800px;
             margin-top: -400px;
             margin-left: -400px;
-            opacity: 0.03; /* Subtle background detail */
+            opacity: 0.03;
             z-index: 0;
             pointer-events: none;
             filter: grayscale(100%) brightness(200%);
@@ -63,7 +59,6 @@
             100% { transform: translate(0, 0) rotate(0deg) scale(1); }
         }
 
-        /* --- Cursor Glow Effect --- */
         .cursor-glow {
             position: fixed;
             top: 0;
@@ -81,13 +76,11 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Layout section depth positioning */
         header, .container, footer {
             position: relative;
             z-index: 1;
         }
 
-        /* Header with Frosted Glass Effect */
         header {
             text-align: center;
             padding: 4rem 1rem;
@@ -153,7 +146,6 @@
             word-wrap: break-word;
         }
 
-        /* Main Container */
         .container {
             max-width: 1000px;
             margin: 3rem auto;
@@ -163,14 +155,12 @@
             box-sizing: border-box;
         }
 
-        /* Grid for Weeks */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 20px;
         }
 
-        /* Compact Tile Styling */
         .card {
             background: var(--bg-glass);
             backdrop-filter: blur(12px);
@@ -187,7 +177,6 @@
             cursor: pointer;
         }
 
-        /* Staggered Animation Delays */
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.15s; }
         .card:nth-child(3) { animation-delay: 0.2s; }
@@ -219,7 +208,6 @@
             display: none;
         }
 
-        /* --- Full Page Detail View Styling --- */
         #full-page-view {
             display: none;
             animation: fadeInUp 0.6s ease-out forwards;
@@ -345,7 +333,6 @@
             border-color: var(--accent);
         }
 
-        /* Keyframe Animations */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -356,7 +343,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
@@ -375,10 +361,8 @@
 </head>
 <body>
 
-    <!-- Moving Background Logo -->
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Background" class="bg-java-logo">
 
-    <!-- Ambient Cursor Glow Element -->
     <div class="cursor-glow"></div>
 
     <header id="main-header">
@@ -406,10 +390,8 @@
 
     <div class="container">
         
-        <!-- Grid View -->
         <div class="grid" id="main-grid">
             
-            <!-- Week 1 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 1</h2>
                 <div class="week-details">
@@ -424,7 +406,6 @@
                 </div>
             </div>
 
-            <!-- Week 2 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 2</h2>
                 <div class="week-details">
@@ -439,7 +420,6 @@
                 </div>
             </div>
 
-            <!-- Week 3 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 3</h2>
                 <div class="week-details">
@@ -454,7 +434,6 @@
                 </div>
             </div>
 
-            <!-- Week 4 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 4</h2>
                 <div class="week-details">
@@ -469,7 +448,6 @@
                 </div>
             </div>
 
-            <!-- Week 5 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 5</h2>
                 <div class="week-details">
@@ -484,7 +462,6 @@
                 </div>
             </div>
 
-            <!-- Week 6 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 6</h2>
                 <div class="week-details">
@@ -499,7 +476,6 @@
                 </div>
             </div>
 
-            <!-- Week 7 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 7</h2>
                 <div class="week-details">
@@ -514,7 +490,6 @@
                 </div>
             </div>
 
-            <!-- Week 8 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 8</h2>
                 <div class="week-details">
@@ -529,7 +504,6 @@
                 </div>
             </div>
 
-            <!-- Week 9 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 9</h2>
                 <div class="week-details">
@@ -544,7 +518,6 @@
                 </div>
             </div>
 
-            <!-- Week 10 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 10</h2>
                 <div class="week-details">
@@ -559,7 +532,6 @@
                 </div>
             </div>
 
-            <!-- Week 11 -->
             <div class="card" onclick="openWeek(this)">
                 <h2>Week 11</h2>
                 <div class="week-details">
@@ -575,11 +547,9 @@
             </div>
         </div>
 
-        <!-- Full Page Detail View -->
         <div id="full-page-view">
             <button class="btn-back" onclick="closeWeek()">← Back to Weeks</button>
             <div class="full-page-content" id="full-page-content">
-                <!-- Content injected via JS -->
             </div>
         </div>
 
@@ -589,9 +559,7 @@
         &copy; 2026 V.GUNADITHYA | Siddhartha Academy of Higher Education
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Full Page Transition Logic
         const mainHeader = document.getElementById('main-header');
         const mainGrid = document.getElementById('main-grid');
         const fullPageView = document.getElementById('full-page-view');
@@ -621,7 +589,6 @@
             fullPageContent.innerHTML = '';
         }
 
-        // Cursor Glow Logic
         const cursorGlow = document.querySelector('.cursor-glow');
         
         let mouseX = window.innerWidth / 2;
