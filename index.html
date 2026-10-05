@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Lab Record | V.GUNADITHYA</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-glass: rgba(255, 255, 255, 0.04); /* Transparent card background */
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-concepts: rgba(0, 0, 0, 0.35); /* Inner transparent box */
+            --border-glass: rgba(255, 255, 255, 0.12); /* Glass edge border */
+            --text-main: #f1f5f9;
+            --text-muted: #cbd5e1;
+            --accent: #63b3ed;
+            --accent-hover: #4299e1;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            /* Ambient radial gradients behind the glass cards */
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(99, 179, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(99, 179, 237, 0.10) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Times New Roman', Times, serif;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            letter-spacing: 0.5px;
+
+            /* Keep footer at bottom */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Moving Java Background Logo --- */
+        .bg-java-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            margin-top: -400px;
+            margin-left: -400px;
+            opacity: 0.03; /* Subtle background detail */
+            z-index: 0;
+            pointer-events: none;
+            filter: grayscale(100%) brightness(200%);
+            animation: floatAndRotate 60s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        @keyframes floatAndRotate {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(40px, -60px) rotate(8deg) scale(1.05); }
+            66% { transform: translate(-50px, 30px) rotate(-5deg) scale(0.95); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+
+        /* --- Cursor Glow Effect --- */
+        .cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 650px; 
+            height: 650px; 
+            margin-left: -325px; 
+            margin-top: -325px;
+            background: radial-gradient(circle, rgba(99, 179, 237, 0.12) 0%, rgba(99, 179, 237, 0.03) 40%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none; 
+            z-index: 0; 
+            mix-blend-mode: screen; 
+            will-change: transform;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Layout section depth positioning */
+        header, .container, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header with Frosted Glass Effect */
+        header {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-glass);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header-wrapper {
+            display: inline-grid;
+            grid-template-columns: 1fr;
+            justify-items: start;
+            margin: 0 auto;
+        }
+
+        .title-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .course-code {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .student-info {
+            font-size: 1.05rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            row-gap: 8px;
+            column-gap: 15px;
+            width: 0;
+            min-width: 100%;
+        }
+
+        .student-info .label {
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        .student-info .value {
+            color: var(--text-main);
+            font-weight: 600;
+            text-align: left;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Grid for Weeks */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 20px;
+        }
+
+        /* Compact Tile Styling */
+        .card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 25px 15px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* Staggered Animation Delays */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+        .card:nth-child(5) { animation-delay: 0.3s; }
+        .card:nth-child(6) { animation-delay: 0.35s; }
+        .card:nth-child(7) { animation-delay: 0.4s; }
+        .card:nth-child(8) { animation-delay: 0.45s; }
+        .card:nth-child(9) { animation-delay: 0.5s; }
+        .card:nth-child(10) { animation-delay: 0.55s; }
+        .card:nth-child(11) { animation-delay: 0.6s; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-glass-hover);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            border-color: rgba(99, 179, 237, 0.5);
+        }
+
+        .card h2 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 1.4rem;
+            white-space: nowrap; 
+            font-weight: 600;
+        }
+
+        .week-details {
+            display: none;
+        }
+
+        /* --- Full Page Detail View Styling --- */
+        #full-page-view {
+            display: none;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-glass);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            color: #fff;
+            border-color: var(--accent);
+            background: rgba(99, 179, 237, 0.1);
+        }
+
+        .full-page-content {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 40px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .full-page-content h2 {
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 15px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .full-page-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .full-page-content .concepts {
+            font-size: 1.05rem;
+            background: var(--bg-concepts);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .full-page-content .button-group {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .full-page-content .button-group {
+                flex-direction: column;
+            }
+            .header-wrapper {
+                justify-items: center;
+            }
+            .student-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+                width: 100%; 
+            }
+            .student-info .label, .student-info .value {
+                text-align: center;
+            }
+        }
+
+        .btn {
+            display: block;
+            flex: 1;
+            background-color: var(--accent);
+            color: #0f172a;
+            padding: 16px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 0.5px;
+            box-sizing: border-box;
+            border: 1px solid var(--accent);
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.4);
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent);
+            border-color: rgba(99, 179, 237, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(99, 179, 237, 0.15);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid var(--border-glass);
+            margin-top: 3rem;
+            letter-spacing: 1px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Moving Background Logo -->
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Background" class="bg-java-logo">
+
+    <!-- Ambient Cursor Glow Element -->
+    <div class="cursor-glow"></div>
+
+    <header id="main-header">
+        <div class="header-wrapper">
+            <div class="title-group">
+                <h1>Java Lab Record</h1>
+                <div class="course-code">24CS281</div>
+            </div>
+            
+            <div class="student-info">
+                <span class="label">Name:</span>
+                <span class="value">V.GUNADITHYA</span>
+                
+                <span class="label">Roll No:</span>
+                <span class="value">25EU02126</span>
+                
+                <span class="label">Institution:</span>
+                <span class="value">Siddhartha Academy of Higher Education</span>
+                
+                <span class="label">Instructor:</span>
+                <span class="value">Ramesh Sir</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Grid View -->
+        <div class="grid" id="main-grid">
+            
+            <!-- Week 1 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 1</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> Introduction to Java installation, execution, and basic programming language comparisons.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Language Comparisons (Java vs C / C++ / Python / JS), JDK Configuration, Hello World Execution.
+                    </div>
+                    <div class="button-group">
+                        <a href="week-01.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-01.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 2</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To perform foundational Java operations including variables, arithmetic, and control flow.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Primitive Data Types, Arithmetic Operations, Type Casting (Widening / Narrowing), ASCII Conversions, Even / Odd Logic, For Loops.
+                    </div>
+                    <div class="button-group">
+                        <a href="week-02.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-02.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 3</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To understand Class fundamentals, object declaration, and method implementation.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Student / Employee Information Systems, Object Reference Variables, Array of Objects, Calculator Methods, Rectangle Operations.
+                    </div>
+                    <div class="button-group">
+                        <a href="week-03.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-03.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 4</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To implement constructors, method overloading, and observe Garbage Collection.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Default / Parameterized Constructors, Constructor Chaining, 'this' Keyword, Overloading Arithmetic & Area Methods, Object Eligibility for GC.
+                    </div>
+                    <div class="button-group">
+                        <a href="week-04.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-04.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 5</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To work with objects as parameters/returns and understand static behaviors.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Passing / Comparing Objects, Returning Objects (BankAccount), Static Variables (Student Count), Static Methods (Utility Math).
+                    </div>
+                    <div class="button-group">
+                        <a href="week-05.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-05.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 6</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To introduce the final keyword and implement various types of Inner Classes.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Final Variables / Methods / Classes, Blank Final Variables, Static Inner Classes (College.Department), Non-Static Inner Classes (Student.Address, Library.Book).
+                    </div>
+                    <div class="button-group">
+                        <a href="week-06.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-06.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 7</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To explore String handling utilities and introduce basic Inheritance.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> String Constructors, Literal vs New Keyword, StringBuffer Class (Append / Insert / Replace), StringTokenizer Class, Basic Inheritance (Person -> Student).
+                    </div>
+                    <div class="button-group">
+                        <a href="week-07.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-07.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 8</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To implement advanced Inheritance, method overriding, and Dynamic Method Dispatch.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> 'super' Keyword, Multilevel Inheritance (Salary Calculation), Method Overriding (Animal Sounds), Dynamic Method Dispatch (Bank Accounts / Shapes).
+                    </div>
+                    <div class="button-group">
+                        <a href="week-08.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-08.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 9 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 9</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To organise and reuse Java code using packages and to achieve abstraction and polymorphism using interfaces.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Packages, access modifiers, CLASSPATH, interfaces, polymorphism, interface inheritance.
+                    </div>
+                    <div class="button-group">
+                        <a href="Week-09.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="Week-09.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 10</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> Practice implementing error-handling and file I/O operations in Java.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> The key concepts are Java exception management (including try-catch, propagation, and custom exceptions) and byte-stream file manipulation.
+                    </div>
+                    <div class="button-group">
+                        <a href="week-10.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="week-10.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="card" onclick="openWeek(this)">
+                <h2>Week 11</h2>
+                <div class="week-details">
+                    <p><strong>Aim:</strong> To perform file handling and multithreading in Java using character streams and the Thread class.</p>
+                    <div class="concepts">
+                        <strong>Concepts:</strong> Reader and Writer, FileReader, FileWriter, file copying, counting characters, words and lines, the main thread, creating threads with Thread and Runnable, concurrent execution, isAlive() and join().
+                    </div>
+                    <div class="button-group">
+                        <a href="Week-11.pdf" target="_blank" class="btn">Open Document</a>
+                        <a href="Week-11.pdf" download class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Page Detail View -->
+        <div id="full-page-view">
+            <button class="btn-back" onclick="closeWeek()">← Back to Weeks</button>
+            <div class="full-page-content" id="full-page-content">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 V.GUNADITHYA | Siddhartha Academy of Higher Education
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Full Page Transition Logic
+        const mainHeader = document.getElementById('main-header');
+        const mainGrid = document.getElementById('main-grid');
+        const fullPageView = document.getElementById('full-page-view');
+        const fullPageContent = document.getElementById('full-page-content');
+
+        function openWeek(element) {
+            const title = element.querySelector('h2').innerText;
+            const detailsHtml = element.querySelector('.week-details').innerHTML;
+            
+            fullPageContent.innerHTML = `<h2>${title}</h2>${detailsHtml}`;
+            
+            mainHeader.style.display = 'none';
+            mainGrid.style.display = 'none';
+            fullPageView.style.display = 'block';
+            
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function closeWeek() {
+            fullPageView.style.display = 'none';
+            mainGrid.style.display = 'grid';
+            mainHeader.style.display = 'block';
+            
+            fullPageContent.innerHTML = '';
+        }
+
+        // Cursor Glow Logic
+        const cursorGlow = document.querySelector('.cursor-glow');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let glowX = mouseX;
+        let glowY = mouseY;
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursorGlow.style.opacity = '1';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateGlow() {
+            glowX += (mouseX - glowX) * 0.15;
+            glowY += (mouseY - glowY) * 0.15;
+            cursorGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
+            requestAnimationFrame(animateGlow);
+        }
+        
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (!isTouchDevice) {
+            animateGlow();
+        } else {
+            cursorGlow.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
